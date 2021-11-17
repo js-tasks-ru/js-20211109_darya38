@@ -5,7 +5,7 @@
  * @returns {object} - returns the new object
  */
 export const omit = (obj, ...fields) => {
-  let result = {};
+  const result = {};
 
   if (fields.length != 0) {
     for (const [key, value] of Object.entries(obj)) {
@@ -14,6 +14,6 @@ export const omit = (obj, ...fields) => {
       } 
     }    
   }
-  
+
   return result;
 };

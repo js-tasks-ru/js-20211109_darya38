@@ -5,7 +5,7 @@
  * @returns {object} - returns the new object
  */
 export const pick = (obj, ...fields) => {
-  let result = {};
+  const result = {};
 
   for (const prop of fields) {
     if (prop in obj) {
