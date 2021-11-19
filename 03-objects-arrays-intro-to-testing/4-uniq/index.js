@@ -4,7 +4,7 @@
  * @returns {*[]} - the new array with uniq values
  */
 export function uniq(arr) {
-  if (arr == undefined) {
+  if (arr === undefined) {
     return [];
   }
 
