@@ -14,18 +14,22 @@ export default class SortableTable {
 
     if (columnId) {
       this.sortOrder *= -1; 
-      this.sortTable(columnId, this.sortOrder);
+      this.sort(columnId, this.sortOrder);
     }
   };
 
-  constructor(headersConfig, {
-    data = [],
-    sorted = {}
-  } = {}) {
+  constructor(
+    headersConfig, 
+    {
+      data = [],
+      sorted = {}
+    } = {},
+    isSortLocally = true) {
     this.headersConfig = headersConfig;
     this.data = Array.isArray(data) ? data : data.data;
     this.sorted = sorted;
     this.subElements = {};
+    this.isSortLocally = isSortLocally;
     
     this.renderElement();
   }
@@ -50,7 +54,7 @@ export default class SortableTable {
 
     if (this.sorted.id) {
       this.sortOrder = this.directions[this.sorted.order];
-      this.sortTable(this.sorted.id);
+      this.sort(this.sorted.id);
     }
     
     this.subElements.header.addEventListener('pointerdown', this.onHeaderClick);
@@ -103,7 +107,15 @@ export default class SortableTable {
     return result;
   }
 
-  sortTable(field) {
+  sort (field) {
+    if (this.isSortLocally) {
+      this.sortOnClient(field);
+    } else {
+      this.sortOnServer(field);
+    }
+  }
+
+  sortOnClient(field) {
     const sortHeader = this.headersConfig.find(item => item.id == field);
 
     if (!sortHeader.sortable) {
@@ -125,6 +137,9 @@ export default class SortableTable {
     this.setSortedColumn(field);
 
     return;
+  }
+
+  sortOnServer(field) {
   }
 
   sortStringArray (arrayToSort, field, direction) {
