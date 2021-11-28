@@ -1,4 +1,6 @@
 export default class NotificationMessage {
+  static previousNotification;
+
   constructor(message, {
     duration = 0,
     type = ''
@@ -11,10 +13,6 @@ export default class NotificationMessage {
   }
 
   renderElement () {
-    if (this.element) {
-      this.remove();
-    }
-
     const element = document.createElement('div');
 
     element.innerHTML = `
@@ -43,6 +41,10 @@ export default class NotificationMessage {
   }
 
   show (div) {
+    if (NotificationMessage.previousNotification) {
+      NotificationMessage.previousNotification.remove();
+    }
+
     if (div) {
       div.appendChild(this.element);
     }
@@ -51,6 +53,8 @@ export default class NotificationMessage {
     }
 
     setTimeout(this.remove.bind(this), this.duration);
+
+    NotificationMessage.previousNotification = this;
   }
 
   destroy() {
