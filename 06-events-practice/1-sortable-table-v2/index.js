@@ -8,7 +8,7 @@ export default class SortableTable {
   currentSortField = '';
   
   onHeaderClick = (event) => {
-    let columnId = event.target.dataset.id 
+    const columnId = event.target.dataset.id 
       ? event.target.dataset.id 
       : event.target.closest('div').dataset.id;
 
@@ -83,14 +83,9 @@ export default class SortableTable {
   getCells(dataElement) {
     return this.headersConfig
           .map(configEl => { 
-            let value = dataElement[configEl.id];
+            const value = dataElement[configEl.id];
 
-            if (configEl.template) {
-              return configEl.template(value);
-            }
-            else {
-              return `<div class="sortable-table__cell">${value}</div>`;
-            }
+            return configEl.template ? configEl.template(value) : `<div class="sortable-table__cell">${value}</div>`;
           }).join('');
   }
 
@@ -122,7 +117,7 @@ export default class SortableTable {
       return;
     }
 
-    let arrayToSort = Array.from(this.data);
+    const arrayToSort = Array.from(this.data);
     switch (sortHeader.sortType) {
     case 'string':
       this.sortStringArray(arrayToSort, field, this.sortOrder);
