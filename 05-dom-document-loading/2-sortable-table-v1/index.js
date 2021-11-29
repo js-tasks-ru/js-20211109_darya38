@@ -56,12 +56,7 @@ export default class SortableTable {
           .map(configEl => { 
             let value = dataElement[configEl.id];
 
-            if (configEl.template) {
-              return configEl.template(value);
-            }
-            else {
-              return `<div class="sortable-table__cell">${value}</div>`;
-            }
+            return configEl.template ? configEl.template(value) : `<div class="sortable-table__cell">${value}</div>`;
           }).join('');
   }
 
@@ -87,7 +82,7 @@ export default class SortableTable {
 
     const direction = this.directions[order];
 
-    let arrayToSort = Array.from(this.data);
+    const arrayToSort = Array.from(this.data);
     switch (sortHeader.sortType) {
     case 'string':
       this.sortStringArray(arrayToSort, field, direction);

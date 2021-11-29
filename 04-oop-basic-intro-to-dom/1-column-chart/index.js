@@ -41,7 +41,7 @@ export default class ColumnChart {
 
     this.element = element.firstElementChild;
 
-    if (this.data.length == 0) {
+    if (!this.data.length) {
       this.setSkeleton();
     }
 
@@ -49,7 +49,7 @@ export default class ColumnChart {
   }
 
   getLink() {
-    return this.link != '' ? `<a class="column-chart__link" href="${this.link}">View all</a>` : '';
+    return this.link !== '' ? `<a class="column-chart__link" href="${this.link}">View all</a>` : '';
   }
 
   getValue() {
