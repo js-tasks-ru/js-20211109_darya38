@@ -40,17 +40,12 @@ export default class NotificationMessage {
     }
   }
 
-  show (div) {
+  show (div = document.body) {
     if (NotificationMessage.previousNotification) {
       NotificationMessage.previousNotification.remove();
     }
 
-    if (div) {
-      div.appendChild(this.element);
-    }
-    else {
-      document.body.append(this.element);
-    }
+    div.append(this.element);
 
     setTimeout(this.remove.bind(this), this.duration);
 
