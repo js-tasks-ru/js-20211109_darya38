@@ -95,8 +95,8 @@ export default class ColumnChart {
   }
   
   async update(from, to) {
-    this.url.searchParams.set('from', from);
-    this.url.searchParams.set('to', to);
+    this.url.searchParams.set('from', from.toISOString());
+    this.url.searchParams.set('to', to.toISOString());
 
     const serverData = await fetchJson(this.url);
 
