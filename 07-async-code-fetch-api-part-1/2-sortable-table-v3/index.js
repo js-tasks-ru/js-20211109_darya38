@@ -12,18 +12,17 @@ export default class SortableTable {
   currentSortField = '';
   
   onHeaderClick = (event) => {
-    const columnId = event.target.dataset.id 
-      ? event.target.dataset.id 
-      : event.target.closest('div').dataset.id;
+    const column = event.target.closest('[data-sortable="true"]');
+    const { id } = column.dataset;
 
-    if (columnId) {
+    if (id) {
       this.sortOrder *= -1; 
       const order = this.sortOrder === 1 ? 'asc' : 'desc';
       if (this.isSortLocally) {
-        this.sortOnClient(columnId, order);
+        this.sortOnClient(id, order);
       }
       else {
-        this.sortOnServer(columnId, order);
+        this.sortOnServer(id, order);
       } 
     }
   };
@@ -252,5 +251,6 @@ export default class SortableTable {
   destroy () {
     this.remove();
     this.subElements = {};
+    window.removeEventListener('scroll', this.onWindowScroll);
   }
 }
